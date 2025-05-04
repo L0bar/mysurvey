@@ -277,6 +277,3 @@ if st.button("So'rovnomani yuborish"):
         st.error("Iltimos, barcha maydonlarni to'ldiring.")
 
 
-
-if st.button("So'rovnomani yuborish"):
-    st.write("So'rovnoma yuborildi. Rahmat!")
