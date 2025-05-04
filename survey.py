@@ -2,20 +2,6 @@ import streamlit as st
 import streamlit_survey as ss 
 from datetime import date
 survey = ss.StreamlitSurvey()
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-
-
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name(r"C:\Users\user\Survey\creds.json", scope)
-
-client = gspread.authorize(creds)
-
-
-sheet = client.open("survey").sheet1
-
-
-
 
 st.set_page_config(page_title="Coca-Cola Uzbekistan bo'yicha so'rovnoma", layout="centered")
 
