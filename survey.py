@@ -67,18 +67,19 @@ st.markdown(
 )
 
 
-survey.text_input("1.Ismingizni yozing", key = 'name')
+name = survey.text_input("1.Ismingizni yozing", key = 'name')
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
-survey.radio(
+age = survey.radio(
     "2.Yosh kategoriyangizni belgilang",
     options = ['12-18', '19-24', '25-40', '40+'], 
-    horizontal=True
+    horizontal=True,
+    key = 'age'
 )
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-survey.radio(
+gender = survey.radio(
     "3.Tanlang:",
     options = ['Erkak', 'Ayol'], 
     horizontal=True,
@@ -88,44 +89,48 @@ survey.radio(
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
-survey.radio(
+frequency = survey.radio(
     "4.Coca-Colani qanchalik tez-tez sotib olasiz?:",
     options= ['Har kuni', 'Haftada bir necha marta', 'Kamdan kam', 'Faqat bayramlarda', 'Umuman sotib olmayman'], 
-    horizontal=False
+    horizontal=False,
+    key = 'frequency'
 )
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-survey.multiselect(
+product = survey.multiselect(
     "5.Qaysi Coca-Cola mahsulotini ko'proq sotib olasiz?",
-    options = ['Coca-Cola classic', 'Zero Sugar', 'Light', 'Fanta', 'Sprite', 'Fuse tea', 'Bonaqua'],
-    max_selections=3  # Maksimal 3 ta tanlov
+    options = ['Coca-Cola classic', 'Coca-Cola shakarsiz', 'Fanta', 'Sprite', 'Fuse tea', 'Bonaqua'],
+    max_selections=3,
+    key = 'product'
 )
 
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-st.select_slider(
+rating = st.select_slider(
     "6.Coca-Cola mahsulotlarini qanday ta'riflaysiz?:", 
     options=["Yomon", "Qoniqarli", "O'rtacha",  "Yaxshi", "A'lo"], 
-    key="Q2"
+    key="rating"
 )
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-survey.radio(
+size = survey.radio(
     "7.Eng ko'p qanday hajmda sotib olasiz?",
     options = ['0.5', '1', '1.5', '2', '2.5'],
-    horizontal = True
+    horizontal = True,
+    key='size'
 )
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-survey.multiselect(
+place = survey.multiselect(
     "8.Coca-colani ko'proq qayerdan sotib olasiz?",
     options = ['Supermarket', 'Fast food/restoran', "Mahalla do'koni", "Avtomat (vending) apparatlaridan"],
-    max_selections=3
+    max_selections=3,
+    key='place'
 )
 
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-st.write("9.Coca-Cola nima bilan ko'proq bog'laysiz?")
+connect = st.write("9.Coca-Cola nima bilan ko'proq bog'laysiz?", key='connect')
 options = ["Baxt", "Energiya", "Oila va do'stlar davrasi", "Bayramlar", 'Yozgi salqinlik', 'Reklama roliklari']
 selected = []
 
@@ -135,14 +140,15 @@ for option in options:
 
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-survey.multiselect(
+effect = survey.multiselect(
     "10.Xarid qaroringizga nima ko'proq ta'sir qiladi?",
     options = ['Narxi', 'Tami', 'Brendga ishonchim', "Mahsulot dizayni", 'Sog\'lik omili', 'Chegirma/aksiyalar'],
-    max_selections=3
+    max_selections=3,
+    key='effect'
 )
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-st.write("11.Coca-Colani qanday taom bilan ichishni afzal ko'rasiz?")
+food = st.write("11.Coca-Colani qanday taom bilan ichishni afzal ko'rasiz?", key='food')
 options = [
     "Pizza", 
     "KFC", 
@@ -159,26 +165,28 @@ for option in options:
         selected_options.append(option)
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-survey.radio(
+suggest = survey.radio(
     "12.Coca-Colani tavsiya qilish darajangizni baholang:",
     options=list(range(0, 11)), 
-    horizontal=True
+    horizontal=True,
+    key='suggest'
 )
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-survey.multiselect(
-    "13.eklamalarga qayerda ko'proq duch kelasiz?",
-    options = ['Televizor', 'Instagram', 'Tiktok', 'Posterlar', 'Korzinka']
+ads = survey.multiselect(
+    "13.Reklamalarga qayerda ko'proq duch kelasiz?",
+    options = ['Televizor', 'Instagram', 'Tiktok', 'Posterlar', 'Korzinka'],
+    key='ads'
 )
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-st.select_slider(
+rate = st.select_slider(
     "14.Coca-Colani boshqa ichimliklarga nisbatan qanday baholaysiz?:", 
     options=["Yomon", "Qoniqarli", "O'rtacha", "Yaxshi", "A'lo"], 
-    key="Q3"
+    key="rate"
 )
 st.markdown("<br><br>", unsafe_allow_html=True)
-st.write("15.Coca-Cola va boshqa brendlarning reklamalari orasida qaysi biri sizni ko'proq jalb qiladi?")
+compare = st.write("15.Coca-Cola va boshqa brendlarning reklamalari orasida qaysi biri sizni ko'proq jalb qiladi?", key='compare')
 options = [
     "Televizion reklama",
     "Internet yoki ijtimoiy tarmoq reklamalari",
@@ -196,18 +204,19 @@ for option in options:
 st.markdown("<br><br>", unsafe_allow_html=True)
 
 
-survey.multiselect(
+select = survey.multiselect(
     "16.Yana qaysi ichimlik brendini tanlaysiz?",
     options = ['Pepsi mahsulotlari(Pepsi, Mirinda, Mountain dew)',
                 'Energetic(Adrinaline, Red Bull, Flash)', 
                 'Salqin choylar(Lipton, Ceylon, Ice tea)', 
-                'Moxito'],
-    max_selections=3
+                'Moxito', 'Limonadi', 'Love is'],
+    max_selections=3,
+    key='select'
 )
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
-st.write("17.Agar siz Coca-Cola o‘rniga boshqa brendni tanlasangiz, bu qarorga nima ta’sir qilgan?")
+decision = st.write("17.Agar siz Coca-Cola o‘rniga boshqa brendni tanlasangiz, bu qarorga nima ta’sir qilgan?", key='decision')
 options = [
     "Narxi arzonroq", 
     "Yangi mahsulotni sinab ko'rish", 
@@ -234,7 +243,7 @@ if other_checkbox:
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
-st.write("18.Agar Coca-Cola sizning ehtiyojlaringizga moslashish imkonini bersa, qanday o‘zgarishlarni kutilayotgan edingiz?")
+new = st.write("18.Coca-Colada qanday o‘zgarishlarni ko'rishni xohlaysiz?", key='new')
 
 options = [
     'Sog‘lomroq variantlar (kamroq shakar, vitaminlar)', 
@@ -255,7 +264,17 @@ if selected_option == 'Boshqa':
 
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-survey.text_area("19.Takliflaringiz?", key="open_feedback")
+open_feedback = survey.text_area("19.Takliflaringiz?", key="open_feedback")
+
+
+all_required_filled = all([name, age, gender, frequency, product, rating, size, place, connect, effect, food, suggest, ads, rate, compare, select, open_feedback])
+
+# Survey submission
+if st.button("So'rovnomani yuborish"):
+    if all_required_filled:
+        st.write("So'rovnoma yuborildi. Rahmat!")
+    else:
+        st.error("Iltimos, barcha maydonlarni to'ldiring.")
 
 
 
