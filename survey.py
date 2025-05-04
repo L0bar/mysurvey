@@ -3,6 +3,7 @@ import streamlit_survey as ss
 from datetime import date
 survey = ss.StreamlitSurvey()
 
+
 st.set_page_config(page_title="Coca-Cola Uzbekistan bo'yicha so'rovnoma", layout="centered")
 
 st.markdown(
@@ -21,7 +22,7 @@ st.markdown(
     """
     <style>
         body {
-            background-color: #fff;
+            background-color: #f0e6d2;
         }
 
         .main {
@@ -137,10 +138,13 @@ st.markdown("<br><br>", unsafe_allow_html=True)
 connect = st.write("9.Coca-Cola nima bilan ko'proq bog'laysiz?", key='connect')
 options = ["Baxt", "Energiya", "Oila va do'stlar davrasi", "Bayramlar", 'Yozgi salqinlik', 'Reklama roliklari']
 selected = []
-
+max_selections = 3
 for option in options:
     if st.checkbox(option):
         selected.append(option)
+if len(selected) > max_selections:
+    st.error(f"Faqat {max_selections} ta variantni tanlashingiz mumkin.")
+    st.stop()
 
 
 st.markdown("<br><br>", unsafe_allow_html=True)
@@ -160,13 +164,17 @@ options = [
     "Sushi", 
     "Milliy taomlar",
     "Burger",
-    "Shirikliklar" 
+    "Shirikliklar", 
     "Farqi yo'q"
 ]
 selected_options = []
+max_selection = 3
 for option in options:
     if st.checkbox(option):
         selected_options.append(option)
+if len(selected_options) > max_selections:
+    st.error(f"Faqat {max_selections} ta variantni tanlashingiz mumkin.")
+    st.stop()
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 suggest = survey.radio(
@@ -180,7 +188,8 @@ st.markdown("<br><br>", unsafe_allow_html=True)
 ads = survey.multiselect(
     "13.Reklamalarga qayerda ko'proq duch kelasiz?",
     options = ['Televizor', 'Instagram', 'Tiktok', 'Posterlar', 'Korzinka'],
-    key='ads'
+    key='ads',
+    max_selections = 3
 )
 
 st.markdown("<br><br>", unsafe_allow_html=True)
@@ -200,9 +209,13 @@ options = [
 ]
 
 selected_options = []
+max_selections = 3
 for option in options:
     if st.checkbox(option):
         selected_options.append(option)
+if len(selected_options) > max_selections:
+    st.error(f"Faqat {max_selections} ta variantni tanlashingiz mumkin.")
+    st.stop()
 
 
 st.markdown("<br><br>", unsafe_allow_html=True)
@@ -213,7 +226,7 @@ select = survey.multiselect(
     options = ['Pepsi mahsulotlari(Pepsi, Mirinda, Mountain dew)',
                 'Energetic(Adrinaline, Red Bull, Flash)', 
                 'Salqin choylar(Lipton, Ceylon, Ice tea)', 
-                'Moxito', 'Limonadi', 'Love is'],
+                'Moxito, Limonadi, Love is'],
     max_selections=3,
     key='select'
 )
@@ -230,6 +243,7 @@ options = [
     "Salomatlik uchun foydaliroq ko‘rinadi"
 ]
 selected_options = []
+max_selection = 3
 for option in options:
     if st.checkbox(option):
         selected_options.append(option)
@@ -244,6 +258,9 @@ if other_checkbox:
         st.warning("Iltimos, 'Boshqa' variantini tanlagan bo'lsangiz, fikrni yozing.")
     else:
         selected_options.append(f"Boshqa: {other_reason}")
+if len(selected_options) > max_selections:
+    st.error(f"Faqat {max_selections} ta variantni tanlashingiz mumkin.")
+    st.stop()
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
@@ -257,7 +274,7 @@ options = [
     'Boshqa'  
 ]
 
-selected_option = st.radio("Tanlang:", options)
+selected_option = st.radio(" ", options)
 
 if selected_option == 'Boshqa':
     other_reason = st.text_input("Iltimos, fikringizni yozing:",  key="other_reason")
@@ -271,7 +288,7 @@ st.markdown("<br><br>", unsafe_allow_html=True)
 open_feedback = survey.text_area("19.Takliflaringiz?", key="open_feedback")
 
 
-all_required_filled = all([name, age, gender, frequency, product, rating, size, place, connect, effect, food, suggest, ads, rate, compare, select, open_feedback])
+all_required_filled = all([name, open_feedback])
 
 # Survey submission
 if st.button("So'rovnomani yuborish"):
@@ -279,4 +296,3 @@ if st.button("So'rovnomani yuborish"):
         st.write("So'rovnoma yuborildi. Rahmat!")
     else:
         st.error("Iltimos, barcha maydonlarni to'ldiring.")
-
