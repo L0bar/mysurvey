@@ -1,0 +1,11 @@
+
+# .streamlit/config.toml
+
+[theme]
+base = "light"  # A light theme to match the bright Coca-Cola feel
+
+backgroundColor = "#f0f3f4"  # A light Coca-Cola red tint for a soft, fresh background
+secondaryBackgroundColor = "#FFFFFF"  # White background for contrast
+primaryColor = "#F40009"  # Coca-Cola red for primary accents
+textColor = "#333333"  # Dark grey text for easy readability on the light background
+font = "Arial" 
