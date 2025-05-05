@@ -2,9 +2,8 @@ import streamlit as st
 import streamlit_survey as ss 
 from datetime import date
 survey = ss.StreamlitSurvey()
-
-
-st.set_page_config(page_title="Coca-Cola Uzbekistan bo'yicha so'rovnoma", layout="centered")
+import requests
+from datetime import date
 
 st.markdown(
     """
@@ -15,59 +14,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 st.markdown(
-    "<h1 style='text-align: center; color: red;'>🥤 Coca-Cola bo'yicha so'rovnoma</h1>", 
-    unsafe_allow_html=True
-)
-st.markdown(
-    """
-    <style>
-        body {
-            background-color: #f0e6d2;
-        }
-
-        .main {
-            padding: 20px;
-            font-family: 'Arial', sans-serif;
-            color: #222;
-        }
-
-        h1, h2, h3 {
-            color: #e41c1c;
-        }
-
-        .survey-question {
-            background-color: #fcebec;
-            border: 2px solid #e41c1c;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-
-        .survey-question:hover {
-            background-color: #fff0f0;
-        }
-
-        .stRadio > div {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 10px;
-        }
-
-        .stButton > button {
-            background-color: #e41c1c;
-            color: white;
-            font-weight: bold;
-            border-radius: 10px;
-            padding: 0.5em 1.5em;
-            border: none;
-        }
-
-        .stButton > button:hover {
-            background-color: #c81010;
-        }
-    </style>
-    """,
+    "<h2 style='text-align: center; color: red;'>🥤 Coca-Cola bo'yicha so'rovnoma</h2>", 
     unsafe_allow_html=True
 )
 
@@ -76,9 +23,9 @@ name = survey.text_input("1.Ismingizni yozing", key = 'name')
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
-age = survey.radio(
+age = st.radio(
     "2.Yosh kategoriyangizni belgilang",
-    options = ['12-18', '19-24', '25-40', '40+'], 
+    options = ['14-18', '19-24', '25-40', '40+'], 
     horizontal=True,
     key = 'age'
 )
@@ -167,12 +114,12 @@ options = [
     "Shirikliklar", 
     "Farqi yo'q"
 ]
-selected_options = []
+food_options = []
 max_selection = 3
 for option in options:
     if st.checkbox(option):
-        selected_options.append(option)
-if len(selected_options) > max_selections:
+        food_options.append(option)
+if len(food_options) > max_selections:
     st.error(f"Faqat {max_selections} ta variantni tanlashingiz mumkin.")
     st.stop()
 
@@ -204,16 +151,15 @@ options = [
     "Televizion reklama",
     "Internet yoki ijtimoiy tarmoq reklamalari",
     "Tezkor takliflar yoki aksiyalar",
-    "Brendning o'ziga xos va esda qoladigan reklamasi",
-    "Mahsulotning foydaliligiga doir ma'lumotlar"
+    "Brendning o'ziga xos va esda qoladigan reklamasi"
 ]
 
-selected_options = []
+compare_options = []
 max_selections = 3
 for option in options:
     if st.checkbox(option):
-        selected_options.append(option)
-if len(selected_options) > max_selections:
+        compare_options.append(option)
+if len(compare_options) > max_selections:
     st.error(f"Faqat {max_selections} ta variantni tanlashingiz mumkin.")
     st.stop()
 
@@ -221,14 +167,15 @@ if len(selected_options) > max_selections:
 st.markdown("<br><br>", unsafe_allow_html=True)
 
 
-select = survey.multiselect(
+choice = survey.multiselect(
     "16.Yana qaysi ichimlik brendini tanlaysiz?",
     options = ['Pepsi mahsulotlari(Pepsi, Mirinda, Mountain dew)',
                 'Energetic(Adrinaline, Red Bull, Flash)', 
                 'Salqin choylar(Lipton, Ceylon, Ice tea)', 
-                'Moxito, Limonadi, Love is'],
+                'Moxito, Limonadi, Love is',
+                'Boshqalar'],
     max_selections=3,
-    key='select'
+    key='choice'
 )
 
 st.markdown("<br><br>", unsafe_allow_html=True)
@@ -242,29 +189,27 @@ options = [
     "Ko‘proq reklama qilinadi", 
     "Salomatlik uchun foydaliroq ko‘rinadi"
 ]
-selected_options = []
+decision_options = []
 max_selection = 3
 for option in options:
     if st.checkbox(option):
-        selected_options.append(option)
+        decision_options.append(option)
 
-# "Boshqa" checkboxini qo'shish
 other_checkbox = st.checkbox("Boshqa")
 
-# Agar "Boshqa" tanlansa, fikrni yozish so'raladi
 if other_checkbox:
     other_reason = st.text_input("Iltimos, fikringizni yozing:")
     if not other_reason:
         st.warning("Iltimos, 'Boshqa' variantini tanlagan bo'lsangiz, fikrni yozing.")
     else:
-        selected_options.append(f"Boshqa: {other_reason}")
-if len(selected_options) > max_selections:
+        decision_options.append(f"Boshqa: {other_reason}")
+if len(decision_options) > max_selections:
     st.error(f"Faqat {max_selections} ta variantni tanlashingiz mumkin.")
     st.stop()
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
-new = st.write("18.Coca-Colada qanday o‘zgarishlarni ko'rishni xohlaysiz?", key='new')
+news = st.write("18.Coca-Colada qanday o‘zgarishlarni ko'rishni xohlaysiz?", key='news')
 
 options = [
     'Sog‘lomroq variantlar (kamroq shakar, vitaminlar)', 
@@ -274,25 +219,57 @@ options = [
     'Boshqa'  
 ]
 
-selected_option = st.radio(" ", options)
+new_option = st.radio(" ", options)
 
-if selected_option == 'Boshqa':
+if new_option == 'Boshqa':
     other_reason = st.text_input("Iltimos, fikringizni yozing:",  key="other_reason")
     if other_reason:
         st.write(f"Sizning fikringiz: {other_reason}")
     else:
         st.warning("Iltimos, 'Boshqa' variantini tanlasangiz, fikrni yozing.")
 
-
 st.markdown("<br><br>", unsafe_allow_html=True)
 open_feedback = survey.text_area("19.Takliflaringiz?", key="open_feedback")
 
+all_required_filled = all([name, product, place, selected, effect, food_options, suggest, ads, compare_options, choice, decision_options, open_feedback])
 
-all_required_filled = all([name, open_feedback])
 
-# Survey submission
 if st.button("So'rovnomani yuborish"):
     if all_required_filled:
-        st.write("So'rovnoma yuborildi. Rahmat!")
+        data = {
+            'name': name,
+            'age': age,
+            'gender': gender,
+            'frequency': frequency,
+            'product': product,
+            'rating': rating,
+            'size': size,
+            'place': place,
+            'connect': selected,
+            'effect': effect,
+            'food': food_options,
+            'suggest': suggest,
+            'ads': ads,
+            'rate': rate,
+            'compare': compare_options,
+            'choice': choice,
+            'decision': decision_options,
+            'news': new_option,
+            'open_feedback': open_feedback
+        }
+
+        try:
+            response = requests.post(
+                'https://script.google.com/macros/s/AKfycbz2AzQeKoH2UZBunjay0u60sYntNchRD2S-APCI-22WRB3OqOOhpet8ATRW2W2BaTo42A/exec',
+                json=data
+            )
+
+            if response.status_code == 200:
+                st.markdown("<h1 style='text-align: center; color: green;'>✅ So‘rovnoma muvaffaqiyatli yuborildi! Rahmat! 🥤</h1>", unsafe_allow_html=True)
+            else:
+                st.error("❌ Yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.")
+
+        except Exception as e:
+            st.error(f"Xatolik yuz berdi: {e}")
     else:
         st.error("Iltimos, barcha maydonlarni to'ldiring.")
