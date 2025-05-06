@@ -231,7 +231,7 @@ if new_option == 'Boshqa':
 st.markdown("<br><br>", unsafe_allow_html=True)
 open_feedback = survey.text_area("19.Takliflaringiz?", key="open_feedback")
 
-all_required_filled = all([name, product, place, selected, effect, food_options, suggest, ads, compare_options, choice, decision_options, open_feedback])
+all_required_filled = all([name, product, place, selected, effect, food_options, ads, compare_options, choice, decision_options, open_feedback])
 
 
 if st.button("So'rovnomani yuborish"):
